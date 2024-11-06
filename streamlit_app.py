@@ -136,12 +136,12 @@ game_classes = {
 
 logos = {
     "Genshin Impact":{
-        "side": "https://static.wikia.nocookie.net/gensin-impact/images/8/80/Genshin_Impact.png/revision/latest?cb=20240331104358",
-        "top": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/ecfdc2143507869.627bcf6b67e1b.png"
+        "side": "images/genshinLogoSide.png",
+        "top": "images/genshinLogoTop.png"
     }, 
     "Honkai: Star Rail":{
-        "side": "https://downloadr2.apkmirror.com/wp-content/uploads/2023/04/57/644844990e3d4.png",
-        "top": "https://static.wikia.nocookie.net/houkai-star-rail/images/2/29/Honkai_Star_Rail.png/revision/latest?cb=20230707214654"
+        "side": "images/hsrLogoSide.png",
+        "top": "images/hsrLogoTop.png"
     }
 }
 

@@ -55,14 +55,14 @@ Follow these instructions to get a local copy of the project up and running.
 
 2. **Input Your Data**:
 
-- Enter your current pity count and total saved currency.
-- Adjust the slider to set the number of pulls required for guaranteed pity.
+   - Enter your current pity count and total saved currency.
+   - Adjust the slider to set the number of pulls required for guaranteed pity.
 
 3. **View Results**:
 
-- The app will display the remaining pulls until the next guaranteed reward.
-- View the probability of getting a reward on your next pull.
-- Track your progress visually with the progress bar.
+   - The app will display the remaining pulls until the next guaranteed reward.
+   - View the probability of getting a reward on your next pull.
+   - Track your progress visually with the progress bar.
 
 ## Roadmap
 

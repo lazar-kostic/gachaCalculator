@@ -95,15 +95,54 @@ class GenshinImpact(GachaGame):
         st.write("Chance of getting a 5 star per pull amount")
         st.line_chart(self.banners[selected_banner].chance_per_pull, x_label="Pulls", y_label="Chance (%)")
 
+class HonkaiStarRail(GachaGame):
+    def __init__(self):
+        super().__init__("Honkai: Star Rail", "Stellar Jades")
+        #Initialize banners
+        self.banners = {
+            "Character Banner": Banner("Character Banner", 90, 0.6, 
+            [0.6, 1.196, 1.788, 2.379, 2.965, 3.547, 4.126, 4.701, 5.272, 5.84, 6.405, 6.966, 7.524, 8.078, 8.63, 9.179, 9.724, 10.265, 10.804, 11.34, 11.871, 12.399, 12.924, 13.447, 13.966, 14.483, 14.996, 15.507, 16.014, 16.517, 17.018, 17.516, 18.011, 18.502, 18.991, 19.477, 19.96, 20.44, 20.917, 21.392, 21.863, 22.332, 22.799, 23.263, 23.724, 24.181, 24.637, 25.09, 25.538, 25.985, 26.43, 26.872, 27.311, 27.748, 28.182, 28.612, 29.04, 29.466, 29.889, 30.309, 30.727, 31.143, 31.556, 31.966, 32.374, 32.78, 33.184, 33.585, 33.984, 34.38, 34.773, 35.165, 35.553, 35.94, 36.324, 56.951, 70.897, 80.326, 86.701, 91.007, 93.921, 95.891, 97.223, 98.124, 98.732, 99.143, 99.421, 99.608, 99.734, 100],
+             None, "Star Rail Special Pass", True, .50),
+            "Weapon Banner": Banner("Weapon Banner", 80, 0.8, 
+            [0.8, 1.6, 2.4, 3.2, 4.0, 4.8, 5.6, 6.4, 7.2, 8.0, 8.8, 9.6, 10.4, 11.2, 12.0, 12.8, 13.6, 14.4, 15.2, 16.0, 16.8, 17.6, 18.4, 19.2, 20.0, 20.8, 21.6, 22.4, 23.2, 24.0, 24.8, 25.6, 26.4, 27.2, 28.0, 28.8, 29.6, 30.4, 31.2, 32.0, 32.8, 33.6, 34.4, 35.2, 36.0, 36.8, 37.6, 38.4, 39.2, 40.0, 40.8, 41.6, 42.4, 43.2, 44.0, 44.8, 45.6, 46.4, 47.2, 48.0, 48.8, 49.6, 50.4, 51.2, 52.0, 55.9, 59.8, 63.7, 67.6, 71.5, 75.4, 79.3, 83.2, 87.1, 91.0, 94.9, 98.8, 100, 100, 100],
+            None, "Star Rail Special Pass", True, .75),
+            "Standard Banner": Banner("Standard Banner", 90, 0.6, 
+            [0.6, 1.196, 1.788, 2.379, 2.965, 3.547, 4.126, 4.701, 5.272, 5.84, 6.405, 6.966, 7.524, 8.078, 8.63, 9.179, 9.724, 10.265, 10.804, 11.34, 11.871, 12.399, 12.924, 13.447, 13.966, 14.483, 14.996, 15.507, 16.014, 16.517, 17.018, 17.516, 18.011, 18.502, 18.991, 19.477, 19.96, 20.44, 20.917, 21.392, 21.863, 22.332, 22.799, 23.263, 23.724, 24.181, 24.637, 25.09, 25.538, 25.985, 26.43, 26.872, 27.311, 27.748, 28.182, 28.612, 29.04, 29.466, 29.889, 30.309, 30.727, 31.143, 31.556, 31.966, 32.374, 32.78, 33.184, 33.585, 33.984, 34.38, 34.773, 35.165, 35.553, 35.94, 36.324, 56.951, 70.897, 80.326, 86.701, 91.007, 93.921, 95.891, 97.223, 98.124, 98.732, 99.143, 99.421, 99.608, 99.734, 100],
+            None, "Star Rail Pass", True, .50)
+        }
+
+    def render_widgets(self):
+        selected_banner = st.selectbox("Select Banner type", list(self.banners.keys()))
+        current_pity = st.number_input("Current Pity", min_value=0, max_value=self.banners[selected_banner].hard_pity - 1)
+        if(self.banners[selected_banner].guarantee):
+            guarantee = st.checkbox("Guarantee?")
+        if(self.banners[selected_banner].fate_points != None):
+            fate_points = st.number_input("Fate Points", min_value=0, max_value=self.banners[selected_banner].fate_points)
+        else:
+            fate_points = None
+        result = self.banners[selected_banner].remaining_pulls(current_pity, guarantee, fate_points)
+        chance_on_next_pull = self.banners[selected_banner].chance_on_next_pull(current_pity, guarantee, fate_points)
+        st.header(f'Pulls remaining until desired 5 star: {result}')
+        st.progress(chance_on_next_pull / 100)
+        st.header(f'Chance of obtaining desired 5 star on next pull: {chance_on_next_pull}%')
+        st.write("Chance of getting a 5 star per pull amount")
+        st.line_chart(self.banners[selected_banner].chance_per_pull, x_label="Pulls", y_label="Chance (%)")
+
+
 game_classes = {
-    "Genshin Impact": GenshinImpact
+    "Genshin Impact": GenshinImpact,
+    "Honkai: Star Rail": HonkaiStarRail
 }
 
 logos = {
     "Genshin Impact":{
         "side": "https://static.wikia.nocookie.net/gensin-impact/images/8/80/Genshin_Impact.png/revision/latest?cb=20240331104358",
         "top": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/ecfdc2143507869.627bcf6b67e1b.png"
-    } 
+    }, 
+    "Honkai: Star Rail":{
+        "side": "https://downloadr2.apkmirror.com/wp-content/uploads/2023/04/57/644844990e3d4.png",
+        "top": "https://static.wikia.nocookie.net/houkai-star-rail/images/2/29/Honkai_Star_Rail.png/revision/latest?cb=20230707214654"
+    }
 }
 
 st.sidebar.title("Gacha pull calculator")
